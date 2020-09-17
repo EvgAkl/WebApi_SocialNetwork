@@ -5,7 +5,7 @@ namespace SocialNetwork_2.Interfaces
 {
     public interface IProfileService
     {
-        GetProfileByIdDto GetProfileById(int id);
-        Task<GetProfileByIdDto> GetProfileByIdAsync(int id);
+        GetProfileDto GetProfileById(int id);
+        Task<GetProfileDto> GetProfileByIdAsync(int id);
     }
 }

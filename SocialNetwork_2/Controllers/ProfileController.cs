@@ -21,7 +21,7 @@ namespace SocialNetwork_2.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<GetProfileByIdDto>> GetProfileById(int id)
+        public async Task<ActionResult<GetProfileDto>> GetProfileById(int id)
         {
             var getProfileByIdDto = await _profileService.GetProfileByIdAsync(id);
             if (getProfileByIdDto == null)

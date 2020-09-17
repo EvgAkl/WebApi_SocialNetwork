@@ -7,7 +7,7 @@ namespace SocialNetwork_2.ProfilesConfiguration
     {
         public ProfileProfile()
         {
-            CreateMap<Profile, GetProfileByIdDto>();
+            CreateMap<Profile, GetProfileDto>();
         }
     }
 }

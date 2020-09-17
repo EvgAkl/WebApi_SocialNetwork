@@ -21,16 +21,16 @@ namespace SocialNetwork_2.Services
             _mapper = mapper;
         }
 
-        public GetProfileByIdDto GetProfileById(int id)
+        public GetProfileDto GetProfileById(int id)
         {
             var profile = _dbContext.Profiles.SingleOrDefault(x => x.Id == id);
-            return _mapper.Map<GetProfileByIdDto>(profile);
+            return _mapper.Map<GetProfileDto>(profile);
         }
 
-        public async Task<GetProfileByIdDto> GetProfileByIdAsync(int id)
+        public async Task<GetProfileDto> GetProfileByIdAsync(int id)
         {
             var profile = await _dbContext.Profiles.SingleOrDefaultAsync(x => x.Id == id);
-            return _mapper.Map<GetProfileByIdDto>(profile);
+            return _mapper.Map<GetProfileDto>(profile);
         }
     }
 }
