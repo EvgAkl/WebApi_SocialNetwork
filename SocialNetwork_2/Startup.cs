@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using SocialNetwork_2.Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace SocialNetwork_2
 {
@@ -26,6 +28,8 @@ namespace SocialNetwork_2
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddDbContext<DatabaseContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("SocialNetworkConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
