@@ -9,8 +9,8 @@ namespace SocialNetwork_2.Database
         public DatabaseContext(DbContextOptions<DatabaseContext> opt) : base(opt)
         { }
 
-        DbSet<Post> Post { get; set; }
-        DbSet<Profile> Profile { get; set; }
+        public DbSet<Post> Posts { get; set; }
+        public DbSet<Profile> Profiles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

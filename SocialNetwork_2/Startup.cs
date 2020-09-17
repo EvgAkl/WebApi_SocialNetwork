@@ -12,6 +12,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SocialNetwork_2.Database;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
+using SocialNetwork_2.Interfaces;
+using SocialNetwork_2.Services;
 
 namespace SocialNetwork_2
 {
@@ -30,6 +33,9 @@ namespace SocialNetwork_2
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddDbContext<DatabaseContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("SocialNetworkConnection")));
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            services.AddScoped<IProfileService, ProfileServices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
