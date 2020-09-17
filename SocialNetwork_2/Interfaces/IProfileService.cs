@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using SocialNetwork_2.Dto.Profile;
 using System.Threading.Tasks;
-using SocialNetwork_2.Dto;
 
 namespace SocialNetwork_2.Interfaces
 {
     public interface IProfileService
     {
         GetProfileByIdDto GetProfileById(int id);
+        Task<GetProfileByIdDto> GetProfileByIdAsync(int id);
     }
 }

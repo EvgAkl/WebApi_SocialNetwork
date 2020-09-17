@@ -1,4 +1,4 @@
-﻿namespace SocialNetwork_2.Dto
+﻿namespace SocialNetwork_2.Dto.Profile
 {
     public class GetProfileByIdDto
     {
