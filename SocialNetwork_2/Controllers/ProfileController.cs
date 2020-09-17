@@ -20,7 +20,7 @@ namespace SocialNetwork_2.Controllers
             _profileService = profileService;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = nameof(GetProfileById))]
         public async Task<ActionResult<GetProfileDto>> GetProfileById(int id)
         {
             var getProfileByIdDto = await _profileService.GetProfileByIdAsync(id);
@@ -30,6 +30,22 @@ namespace SocialNetwork_2.Controllers
             }
 
             return Ok(getProfileByIdDto);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<GetProfileDto>> CreateProfile(AddProfileDto addProfileDto)
+        {
+            GetProfileDto getProfileDto = null;
+            try
+            {
+                getProfileDto = await _profileService.AddProfileAsync(addProfileDto);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+
+            return CreatedAtRoute(nameof(GetProfileById), new { id = getProfileDto.Id }, getProfileDto);
         }
 
     }

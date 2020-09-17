@@ -7,5 +7,7 @@ namespace SocialNetwork_2.Interfaces
     {
         GetProfileDto GetProfileById(int id);
         Task<GetProfileDto> GetProfileByIdAsync(int id);
+        GetProfileDto AddProfile(AddProfileDto addProfileDto);
+        Task<GetProfileDto> AddProfileAsync(AddProfileDto addProfileDto);
     }
 }
