@@ -20,6 +20,17 @@ namespace SocialNetwork_2.Controllers
             _postService = postService;
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<GetPostDto>> GetPostById(int id)
+        {
+            var getPostDto = await _postService.GetPostByIdAsync(id);
+            if(getPostDto == null)
+            {
+                return NotFound();
+            }
+            return Ok(getPostDto);
+        }
+
         [HttpGet]
         public async Task<ActionResult<List<GetPostDto>>> GetPostsByUserId([FromQuery]int userId)
         {

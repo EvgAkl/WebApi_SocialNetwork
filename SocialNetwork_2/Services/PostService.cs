@@ -20,6 +20,18 @@ namespace SocialNetwork_2.Services
             _mapper = mapper;
         }
 
+        public GetPostDto GetPostById(int id)
+        {
+            var post = _dbContext.Posts.SingleOrDefault(x => x.Id == id);
+            return _mapper.Map<GetPostDto>(post);
+        }
+
+        public async Task<GetPostDto> GetPostByIdAsync(int id)
+        {
+            var post = await _dbContext.Posts.SingleOrDefaultAsync(x => x.Id == id);
+            return _mapper.Map<GetPostDto>(post);
+        }
+
         public List<GetPostDto> GetPostsByUserId(int userId)
         {
             var posts = _dbContext.Posts.Where(x => x.ProfileId == userId).ToList();
