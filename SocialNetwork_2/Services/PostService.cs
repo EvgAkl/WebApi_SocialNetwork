@@ -6,6 +6,8 @@ using SocialNetwork_2.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System;
+using SocialNetwork_2.Database.DbEntities;
 
 namespace SocialNetwork_2.Services
 {
@@ -42,6 +44,43 @@ namespace SocialNetwork_2.Services
         {
             var posts = await _dbContext.Posts.Where(x => x.ProfileId == userId).ToListAsync();
             return _mapper.Map<List<GetPostDto>>(posts);
+        }
+
+        private static void AddPostValidate(AddPostDto addPostDto)
+        {
+            if (addPostDto == null)
+            {
+                throw new ArgumentNullException(nameof(addPostDto));
+            }
+
+            if (!addPostDto.Validate())
+            {
+                throw new InvalidOperationException();
+            }
+        }
+
+        public GetPostDto AddPost(AddPostDto addPostDto)
+        {
+            AddPostValidate(addPostDto);
+
+            var post = _mapper.Map<Post>(addPostDto);
+            post.Date = DateTime.Now;
+            _dbContext.Posts.Add(post);
+            _dbContext.SaveChanges();
+            return _mapper.Map<GetPostDto>(post);
+
+        }
+
+        public async Task<GetPostDto> AddPostAsync(AddPostDto addPostDto)
+        {
+            AddPostValidate(addPostDto);
+
+            var post = _mapper.Map<Post>(addPostDto);
+            post.Date = DateTime.Now;
+            await _dbContext.AddAsync(post);
+            await _dbContext.SaveChangesAsync();
+            return _mapper.Map<GetPostDto>(post);
+
         }
     }
 }

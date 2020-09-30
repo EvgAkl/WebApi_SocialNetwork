@@ -20,7 +20,7 @@ namespace SocialNetwork_2.Controllers
             _postService = postService;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = nameof(GetPostById))]
         public async Task<ActionResult<GetPostDto>> GetPostById(int id)
         {
             var getPostDto = await _postService.GetPostByIdAsync(id);
@@ -41,6 +41,22 @@ namespace SocialNetwork_2.Controllers
             }
 
             return Ok(getPostDtos);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<GetPostDto>> CreatePost(AddPostDto addPostDto)
+        {
+            GetPostDto getPostDto = null;
+            try
+            {
+                getPostDto = await _postService.AddPostAsync(addPostDto);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+
+            return CreatedAtRoute(nameof(GetPostById), new { id = getPostDto.Id }, getPostDto);
         }
     }
 }
