@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using SocialNetwork_2.Database;
+using SocialNetwork_2.Database.DbEntities;
 using SocialNetwork_2.Dto.Post;
 using SocialNetwork_2.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System;
-using SocialNetwork_2.Database.DbEntities;
 
 namespace SocialNetwork_2.Services
 {
@@ -22,15 +22,27 @@ namespace SocialNetwork_2.Services
             _mapper = mapper;
         }
 
-        public GetPostDto GetPostById(int id)
+        private Post GetPost(int id)
         {
             var post = _dbContext.Posts.SingleOrDefault(x => x.Id == id);
+            return post;
+        }
+
+        private async Task<Post> GetPostAsync(int id)
+        {
+            var post = await _dbContext.Posts.SingleOrDefaultAsync(x => x.Id == id);
+            return post;
+        }
+
+        public GetPostDto GetPostById(int id)
+        {
+            var post = GetPost(id);
             return _mapper.Map<GetPostDto>(post);
         }
 
         public async Task<GetPostDto> GetPostByIdAsync(int id)
         {
-            var post = await _dbContext.Posts.SingleOrDefaultAsync(x => x.Id == id);
+            var post = await GetPostAsync(id);
             return _mapper.Map<GetPostDto>(post);
         }
 
@@ -81,6 +93,39 @@ namespace SocialNetwork_2.Services
             await _dbContext.SaveChangesAsync();
             return _mapper.Map<GetPostDto>(post);
 
+        }
+
+        private void UpdatePostValidate(UpdatePostDto updatePostDto)
+        {
+            if (updatePostDto == null)
+            {
+                throw new ArgumentNullException(nameof(updatePostDto));
+            }
+
+            if (!updatePostDto.Validate())
+            {
+                throw new InvalidOperationException();
+            }
+        }
+
+        public void UpdatePost(UpdatePostDto updatePostDto)
+        {
+            UpdatePostValidate(updatePostDto);
+
+            var post = GetPost(updatePostDto.Id);
+            _mapper.Map(updatePostDto, post);
+            post.Date = DateTime.Now;
+            _dbContext.SaveChanges();
+        }
+
+        public async Task UpdatePostAsync(UpdatePostDto updatePostDto)
+        {
+            UpdatePostValidate(updatePostDto);
+
+            var post = await GetPostAsync(updatePostDto.Id);
+            _mapper.Map(updatePostDto, post);
+            post.Date = DateTime.Now;
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

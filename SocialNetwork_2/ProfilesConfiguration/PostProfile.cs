@@ -9,6 +9,7 @@ namespace SocialNetwork_2.ProfilesConfiguration
         {
             CreateMap<Post, GetPostDto>();
             CreateMap<AddPostDto, Post>();
+            CreateMap<UpdatePostDto, Post>();
         }
 
     }

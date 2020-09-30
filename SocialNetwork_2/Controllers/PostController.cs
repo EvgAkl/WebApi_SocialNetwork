@@ -58,5 +58,12 @@ namespace SocialNetwork_2.Controllers
 
             return CreatedAtRoute(nameof(GetPostById), new { id = getPostDto.Id }, getPostDto);
         }
+
+        [HttpPut]
+        public async Task<ActionResult> UpdatePost(UpdatePostDto updatePostDto)
+        {
+            await _postService.UpdatePostAsync(updatePostDto);
+            return NoContent();
+        }
     }
 }

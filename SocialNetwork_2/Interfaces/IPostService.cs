@@ -12,5 +12,7 @@ namespace SocialNetwork_2.Interfaces
         Task<List<GetPostDto>> GetPostsByUserIdAsync(int userId);
         GetPostDto AddPost(AddPostDto addPostDto);
         Task<GetPostDto> AddPostAsync(AddPostDto addPostDto);
+        void UpdatePost(UpdatePostDto updatePostDto);
+        Task UpdatePostAsync(UpdatePostDto updatePostDto);
     }
 }
