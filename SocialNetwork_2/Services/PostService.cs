@@ -127,5 +127,27 @@ namespace SocialNetwork_2.Services
             post.Date = DateTime.Now;
             await _dbContext.SaveChangesAsync();
         }
+
+        public void DeletePost(int id)
+        {
+            var post = GetPost(id);
+            if (post == null)
+            {
+                throw new ArgumentNullException(nameof(post));
+            }
+            _dbContext.Remove(post);
+            _dbContext.SaveChanges();
+        }
+
+        public async Task DeletePostAsync(int id)
+        {
+            var post = await GetPostAsync(id);
+            if(post == null)
+            {
+                throw new ArgumentNullException(nameof(post));
+            }
+            _dbContext.Remove(post);
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

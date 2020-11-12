@@ -73,5 +73,19 @@ namespace SocialNetwork_2.Controllers
             
             return NoContent();
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeletePost(int id)
+        {
+            try
+            {
+                await _postService.DeletePostAsync(id);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+            return NoContent();
+        }
     }
 }
