@@ -9,5 +9,7 @@ namespace SocialNetwork_2.Interfaces
         Task<GetProfileDto> GetProfileByIdAsync(int id);
         GetProfileDto AddProfile(AddProfileDto addProfileDto);
         Task<GetProfileDto> AddProfileAsync(AddProfileDto addProfileDto);
+        void UpdateProfile(UpdateProfileDto updateProfileDto);
+        Task UpdateProfileAsync(UpdateProfileDto updateProfileDto);
     }
 }

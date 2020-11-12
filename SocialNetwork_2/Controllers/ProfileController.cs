@@ -48,5 +48,21 @@ namespace SocialNetwork_2.Controllers
             return CreatedAtRoute(nameof(GetProfileById), new { id = getProfileDto.Id }, getProfileDto);
         }
 
+        [HttpPut]
+        public async Task<ActionResult> UpdateProfile(UpdateProfileDto updateProfileDto)
+        {
+            try
+            {
+                await _profileService.UpdateProfileAsync(updateProfileDto);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+            
+            return NoContent();
+        }
+
+
     }
 }

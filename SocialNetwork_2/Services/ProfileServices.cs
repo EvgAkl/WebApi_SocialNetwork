@@ -22,15 +22,27 @@ namespace SocialNetwork_2.Services
             _mapper = mapper;
         }
 
-        public GetProfileDto GetProfileById(int id)
+        private Profile GetProfile(int id)
         {
             var profile = _dbContext.Profiles.SingleOrDefault(x => x.Id == id);
+            return profile;
+        }
+
+        private async Task<Profile> GetProfileAsync(int id)
+        {
+            var profile = await _dbContext.Profiles.SingleOrDefaultAsync(x => x.Id == id);
+            return profile;
+        }
+
+        public GetProfileDto GetProfileById(int id)
+        {
+            var profile = GetProfile(id);
             return _mapper.Map<GetProfileDto>(profile);
         }
 
         public async Task<GetProfileDto> GetProfileByIdAsync(int id)
         {
-            var profile = await _dbContext.Profiles.SingleOrDefaultAsync(x => x.Id == id);
+            var profile = await GetProfileAsync(id);
             return _mapper.Map<GetProfileDto>(profile);
         }
 
@@ -65,6 +77,37 @@ namespace SocialNetwork_2.Services
             await _dbContext.Profiles.AddAsync(profile);
             await _dbContext.SaveChangesAsync();
             return _mapper.Map<GetProfileDto>(profile);
+        }
+
+        private void UpdateProfileValidate(UpdateProfileDto updateProfileDto)
+        {
+            if (updateProfileDto == null)
+            {
+                throw new ArgumentNullException(nameof(updateProfileDto));
+            }
+
+            if (!updateProfileDto.Validate())
+            {
+                throw new InvalidOperationException();
+            }
+        }
+
+        public void UpdateProfile(UpdateProfileDto updateProfileDto)
+        {
+            UpdateProfileValidate(updateProfileDto);
+
+            var profile = GetProfile(updateProfileDto.Id);
+            _mapper.Map(updateProfileDto, profile);
+            _dbContext.SaveChanges();
+        }
+
+        public async Task UpdateProfileAsync(UpdateProfileDto updateProfileDto)
+        {
+            UpdateProfileValidate(updateProfileDto);
+
+            var profile = await GetProfileAsync(updateProfileDto.Id);
+            _mapper.Map(updateProfileDto, profile);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

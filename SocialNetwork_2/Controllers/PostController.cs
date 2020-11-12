@@ -62,7 +62,15 @@ namespace SocialNetwork_2.Controllers
         [HttpPut]
         public async Task<ActionResult> UpdatePost(UpdatePostDto updatePostDto)
         {
-            await _postService.UpdatePostAsync(updatePostDto);
+            try
+            {
+                await _postService.UpdatePostAsync(updatePostDto);
+            }
+            catch
+            {
+                BadRequest();
+            }
+            
             return NoContent();
         }
     }
