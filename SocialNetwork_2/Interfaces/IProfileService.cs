@@ -11,5 +11,7 @@ namespace SocialNetwork_2.Interfaces
         Task<GetProfileDto> AddProfileAsync(AddProfileDto addProfileDto);
         void UpdateProfile(UpdateProfileDto updateProfileDto);
         Task UpdateProfileAsync(UpdateProfileDto updateProfileDto);
+        void DeleteProfile(int id);
+        Task DeleteProfileAsync(int id);
     }
 }

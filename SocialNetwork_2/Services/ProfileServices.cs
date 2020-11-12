@@ -109,5 +109,27 @@ namespace SocialNetwork_2.Services
             _mapper.Map(updateProfileDto, profile);
             await _dbContext.SaveChangesAsync();
         }
+
+        public void DeleteProfile(int id)
+        {
+            var profile = GetProfile(id);
+            if (profile == null)
+            {
+                throw new ArgumentNullException(nameof(profile));
+            }
+            _dbContext.Remove(profile);
+            _dbContext.SaveChanges();
+        }
+
+        public async Task DeleteProfileAsync(int id)
+        {
+            var profile = await GetProfileAsync(id);
+            if(profile == null)
+            {
+                throw new ArgumentNullException(nameof(profile));
+            }
+            _dbContext.Remove(profile);
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }
